@@ -34,7 +34,7 @@ import com.spring.response.ServerResponse;
 import com.spring.response.ViewOrderResponse;
 import com.spring.util.Validator;
 
-@CrossOrigin(origins = WebConstants.ALLOWED_URL)
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -155,6 +155,7 @@ public class AdminController {
 				ord.setOrderBy(po.getEmail());
 				ord.setOrderId(po.getOrderId());
 				ord.setOrderStatus(po.getOrderStatus());
+				ord.setTotalCost(po.getTotalCost());
 				ord.setProducts(cartRepo.findAllByOrderId(po.getOrderId()));
 				orderList.add(ord);
 			});

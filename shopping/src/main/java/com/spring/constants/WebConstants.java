@@ -32,6 +32,6 @@ public class WebConstants {
 	public static final String BUF_QUANTITY = "quantity";
 
 	// Domains
-	public static final String ALLOWED_URL = "http://localhost:4200";
+	//public static final String ALLOWED_URL = "http://localhost:4200";
 
 }

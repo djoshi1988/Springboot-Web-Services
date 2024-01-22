@@ -45,7 +45,7 @@ import com.spring.response.ServerResponse;
 import com.spring.response.UserResponse;
 import com.spring.util.Validator;
 
-@CrossOrigin(origins = WebConstants.ALLOWED_URL)
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -178,7 +178,7 @@ public class UserController {
 					.orElseThrow(() -> new UserCustomException(auth.getName()));
 			resp.setStatus(ResponseCode.SUCCESS_CODE);
 			resp.setMessage(ResponseCode.VW_CART_MESSAGE);
-			resp.setOblist(cartRepo.findByEmail(loggedUser.getEmail()));
+			resp.setOblist(cartRepo.findAllByEmailAndOrderId(loggedUser.getEmail(),Integer.parseInt("0")));
 		} catch (Exception e) {
 			throw new CartCustomException("Unable to retrieve cart items, please try again");
 		}
@@ -197,7 +197,7 @@ public class UserController {
 			Bufcart selCart = cartRepo.findByBufcartIdAndEmail(Integer.parseInt(cart.get("id")), loggedUser.getEmail());
 			selCart.setQuantity(Integer.parseInt(cart.get("quantity")));
 			cartRepo.save(selCart);
-			List<Bufcart> bufcartlist = cartRepo.findByEmail(loggedUser.getEmail());
+			List<Bufcart> bufcartlist = cartRepo.findAllByEmailAndOrderId(loggedUser.getEmail(),0);
 			resp.setStatus(ResponseCode.SUCCESS_CODE);
 			resp.setMessage(ResponseCode.UPD_CART_MESSAGE);
 			resp.setOblist(bufcartlist);
@@ -240,9 +240,9 @@ public class UserController {
 			po.setOrderDate(date);
 			po.setOrderStatus(ResponseCode.ORD_STATUS_CODE);
 			double total = 0;
-			List<Bufcart> buflist = cartRepo.findAllByEmail(loggedUser.getEmail());
+			List<Bufcart> buflist = cartRepo.findAllByEmailAndOrderId(loggedUser.getEmail(),0);
 			for (Bufcart buf : buflist) {
-				total = +(buf.getQuantity() * buf.getPrice());
+				total += (buf.getQuantity() * buf.getPrice());
 			}
 			po.setTotalCost(total);
 			PlaceOrder res = ordRepo.save(po);

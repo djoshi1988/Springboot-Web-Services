@@ -9,6 +9,16 @@ public class Order {
 	private int orderId;
 	private String orderBy;
 	private String orderStatus;
+	private double totalCost;
+	
+	public double getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
+	}
+
 	private List<Bufcart> products = new ArrayList<>();
 
 	public List<Bufcart> getProducts() {
